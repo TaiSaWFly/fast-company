@@ -1,38 +1,51 @@
 import React from "react";
 import Qualitie from "./qualitie";
-import BoockMark from "./bookmark";
+import BookMark from "./bookmark";
+import PropTypes from "prop-types";
 
-const User = (user) => {
+const User = ({
+  _id,
+  name,
+  qualities,
+  profession,
+  completedMeetings,
+  rate,
+  onDelete,
+  bookmark,
+  onToggleBookMark,
+}) => {
   return (
-    <>
-      <tr key={user._id}>
-        <td>{user.name}</td>
-        <td>
-          {user.qualities.map((qualities) => (
-            <Qualitie
-              key={qualities._id}
-              color={qualities.color}
-              name={qualities.name}
-            />
-          ))}
-        </td>
-        <td>{user.profession}</td>
-        <td>{user.completedMeetings}</td>
-        <td>{user.rate} /5</td>
-        <td>
-          <BoockMark
-            status={user.status}
-            onToggleBookMark={user.onToggleBookMark}
-          />
-        </td>
-        <td>
-          <button className="btn btn-danger" onClick={user.onDelete}>
-            delete
-          </button>
-        </td>
-      </tr>
-    </>
+    <tr>
+      <td>{name}</td>
+      <td>
+        {qualities.map((qual) => (
+          <Qualitie key={qual._id} {...qual} />
+        ))}
+      </td>
+      <td>{profession.name}</td>
+      <td>{completedMeetings}</td>
+      <td>{rate} /5</td>
+      <td>
+        <BookMark status={bookmark} onClick={() => onToggleBookMark(_id)} />
+      </td>
+      <td>
+        <button onClick={() => onDelete(_id)} className="btn btn-danger">
+          delete
+        </button>
+      </td>
+    </tr>
   );
+};
+User.propTypes = {
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  qualities: PropTypes.array.isRequired,
+  profession: PropTypes.object.isRequired,
+  completedMeetings: PropTypes.number.isRequired,
+  rate: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  bookmark: PropTypes.bool.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired,
 };
 
 export default User;

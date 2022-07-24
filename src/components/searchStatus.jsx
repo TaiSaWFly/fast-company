@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const SerchStatus = ({ length }) => {
+const SearchStatus = ({ length }) => {
   const declOfNum = (number, titles, cases = [2, 0, 1, 1, 1, 2]) => {
     return titles[
       number % 100 > 4 && number % 100 < 20
@@ -21,5 +22,8 @@ const SerchStatus = ({ length }) => {
     <div className="fs-4 badge bg-danger">{`Никто с тобой не тусанёт :*(`}</div>
   );
 };
+SearchStatus.propTypes = {
+  length: PropTypes.number.isRequired,
+};
 
-export default SerchStatus;
+export default SearchStatus;
