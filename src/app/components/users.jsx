@@ -6,6 +6,7 @@ import User from "./user";
 import SearchStatus from "./searchStatus";
 import api from "../api";
 import GroupList from "./groupList";
+import { isEqual } from "lodash";
 
 const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,21 +30,11 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter((user) => isEqual(user.profession, selectedProf))
         : allUsers;
 
     const count = filteredUsers.length;
     const usersCrop = paginate(filteredUsers, currentPage, pageSize);
-
-    console.log("filteredUsers", filteredUsers);
-    console.log("currentPage", currentPage);
-    console.log("pageSize", pageSize);
-    console.log("allUsers", allUsers);
-
-    console.log("usersCrop", usersCrop);
-    console.log("selectedProf", selectedProf);
-    console.log("proff", professions);
-    console.log("______");
 
     const clearFilter = () => {
         setSelectedProf();
