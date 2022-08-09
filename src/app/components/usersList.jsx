@@ -8,7 +8,7 @@ import api from "../api";
 import GroupList from "./groupList";
 import _ from "lodash";
 
-const Users = () => {
+const UsersList = () => {
     const [users, setUsers] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
@@ -114,8 +114,8 @@ const Users = () => {
     }
     return "loading...";
 };
-Users.propTypes = {
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
