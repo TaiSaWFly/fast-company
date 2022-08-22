@@ -4,6 +4,7 @@ import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import UserTable from "./userTable";
 import SearchStatus from "./searchStatus";
+import TextField from "./textField";
 import api from "../api";
 import GroupList from "./groupList";
 import _ from "lodash";
@@ -14,6 +15,7 @@ const UsersList = () => {
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [searchValue, setSearchValue] = useState("");
     const pageSize = 8;
 
     useEffect(() => {
@@ -45,6 +47,7 @@ const UsersList = () => {
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
+        setSearchValue("");
     };
 
     const handleSort = (item) => {
@@ -53,6 +56,11 @@ const UsersList = () => {
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
+    };
+
+    const handleSearch = ({ target }) => {
+        setSearchValue((prevState) => (prevState = target.value));
+        setSelectedProf();
     };
 
     if (users) {
@@ -66,7 +74,10 @@ const UsersList = () => {
             [sortBy.path],
             [sortBy.order]
         );
-        const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+        const searchUsers = sortedUsers.filter((user) =>
+            user.name.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        const usersCrop = paginate(searchUsers, currentPage, pageSize);
 
         const clearFilter = () => {
             setSelectedProf();
@@ -91,6 +102,16 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+
+                    {/* Ad search */}
+                    <TextField
+                        name="search"
+                        value={searchValue}
+                        placeholder="Search..."
+                        onChange={handleSearch}
+                    />
+                    {/* Ad search */}
+
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
