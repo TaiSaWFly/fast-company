@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { isArray } from "lodash";
 
 const GroupList = ({
     items,
@@ -9,7 +8,7 @@ const GroupList = ({
     onItemSelect,
     selectedItem
 }) => {
-    if (!isArray(items)) {
+    if (!Array.isArray(items)) {
         return (
             <ul className="list-group">
                 {Object.keys(items).map((item) => (
@@ -27,25 +26,24 @@ const GroupList = ({
                 ))}
             </ul>
         );
-    } else {
-        return (
-            <ul className="list-group">
-                {items.map((item) => (
-                    <li
-                        key={item[valueProperty]}
-                        className={
-                            "list-group-item" +
-                            (item === selectedItem ? " active" : "")
-                        }
-                        onClick={() => onItemSelect(item)}
-                        role="button"
-                    >
-                        {item[contentProperty]}
-                    </li>
-                ))}
-            </ul>
-        );
     }
+    return (
+        <ul className="list-group">
+            {items.map((item) => (
+                <li
+                    key={item[valueProperty]}
+                    className={
+                        "list-group-item" +
+                        (item === selectedItem ? " active" : "")
+                    }
+                    onClick={() => onItemSelect(item)}
+                    role="button"
+                >
+                    {item[contentProperty]}
+                </li>
+            ))}
+        </ul>
+    );
 };
 GroupList.defaultProps = {
     valueProperty: "_id",

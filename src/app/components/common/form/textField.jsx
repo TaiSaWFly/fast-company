@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({
-    label,
-    type,
-    name,
-    value,
-    placeholder,
-    onChange,
-    error
-}) => {
+const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false);
+
+    const handleChange = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
     const getInputClasses = () => {
         return "form-control" + (error ? " is-invalid" : "");
     };
-
     const toggleShowPassword = () => {
         setShowPassword((prevState) => !prevState);
     };
-
     return (
         <div className="mb-4">
             <label htmlFor={name}>{label}</label>
@@ -28,8 +22,7 @@ const TextField = ({
                     id={name}
                     name={name}
                     value={value}
-                    placeholder={placeholder}
-                    onChange={onChange}
+                    onChange={handleChange}
                     className={getInputClasses()}
                 />
                 {type === "password" && (
@@ -58,7 +51,6 @@ TextField.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
-    placeholder: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string
 };

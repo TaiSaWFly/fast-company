@@ -13,7 +13,6 @@ const TableBody = ({ data, columns }) => {
         }
         return _.get(item, columns[column].path);
     };
-
     return (
         <tbody>
             {data.map((item) => (
@@ -26,6 +25,7 @@ const TableBody = ({ data, columns }) => {
         </tbody>
     );
 };
+
 TableBody.propTypes = {
     data: PropTypes.array.isRequired,
     columns: PropTypes.object.isRequired

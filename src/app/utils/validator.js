@@ -1,39 +1,39 @@
 export function validator(data, config) {
     const errors = {};
     function validate(validateMethod, data, config) {
-        let statusValidale;
+        let statusValidate;
         switch (validateMethod) {
-            case "isRequired":
-                statusValidale = data.trim() === "";
+            case "isRequired": {
+                if (typeof data === "boolean") {
+                    statusValidate = !data;
+                } else {
+                    statusValidate = data.trim() === "";
+                }
                 break;
-
+            }
             case "isEmail": {
                 const emailRegExp = /^\S+@\S+\.\S+$/g;
-                statusValidale = !emailRegExp.test(data);
+                statusValidate = !emailRegExp.test(data);
                 break;
             }
-
             case "isCapitalSymbol": {
-                const capitalSymbolRegExp = /[A-Z]/g;
-                statusValidale = !capitalSymbolRegExp.test(data);
+                const capitalRegExp = /[A-Z]+/g;
+                statusValidate = !capitalRegExp.test(data);
                 break;
             }
-
             case "isContainDigit": {
                 const digitRegExp = /\d+/g;
-                statusValidale = !digitRegExp.test(data);
+                statusValidate = !digitRegExp.test(data);
                 break;
             }
-
-            case "min":
-                statusValidale = data.length < config.value;
+            case "min": {
+                statusValidate = data.length < config.value;
                 break;
-
+            }
             default:
                 break;
         }
-
-        if (statusValidale) return config.message;
+        if (statusValidate) return config.message;
     }
     for (const fieldName in data) {
         for (const validateMethod in config[fieldName]) {

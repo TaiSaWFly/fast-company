@@ -14,11 +14,12 @@ module.exports = {
     plugins: ["react"],
     rules: {
         semi: [2, "always"],
-        indent: ["error", 4, { SwitchCase: 1 }],
+        indent: [0, 4],
         "space-before-function-paren": [
             "error",
             { anonymous: "always", named: "never" }
         ],
+        "multiline-ternary": ["off"],
         quotes: [
             "error",
             "double",
