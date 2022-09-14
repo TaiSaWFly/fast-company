@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import api from "../../../api";
-import Qualities from "../../ui/qualities";
-import { Link } from "react-router-dom";
+// import Qualities from "../../ui/qualities";
+// import { Link } from "react-router-dom";
+import UserCard from "../../ui/userCard";
+import Comments from "../../ui/comments";
+import QualitiesCard from "../../ui/qualitiesCard";
+import CompletedMeetings from "../../ui/completedMeetings";
 
 const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
@@ -13,25 +17,23 @@ const UserPage = ({ userId }) => {
 
     if (user) {
         return (
-            <div className="m-4">
-                <h1> {user.name}</h1>
-                <h2>Профессия: {user.profession.name}</h2>
-                <Qualities qualities={user.qualities} />
-                <p>completedMeetings: {user.completedMeetings}</p>
-                <h2>Sex: {user.sex}</h2>
-                <h2>email: {user.email}</h2>
-                <h2>Rate: {user.rate}</h2>
-
-                <Link
-                    className="btn btn-primary"
-                    to={`/users/${user._id}/edit`}
-                >
-                    Edit
-                </Link>
+            <div className="container">
+                <div className="row gutters-sm">
+                    <div className="col-md-4 mb-3">
+                        <UserCard user={user} />
+                        <QualitiesCard qualities={user.qualities} />
+                        <CompletedMeetings
+                            completedMeetings={user.completedMeetings}
+                        />
+                    </div>
+                    <div className="col-md-8">
+                        <Comments />
+                    </div>
+                </div>
             </div>
         );
     } else {
-        return <h1>Loading</h1>;
+        return <p>Loading...</p>;
     }
 };
 
