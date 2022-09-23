@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { validator } from "../../../utils/validator";
 import api from "../../../api";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
-import MultiSelectField from "../../common/form/multiSelectField";
 import RadioField from "../../common/form/radioField";
-import { validator } from "../../../utils/validator";
-import { useHistory, useParams } from "react-router-dom";
+import MultiSelectField from "../../common/form/multiSelectField";
+import BackHistoryButton from "../../common/backButton";
 
 const EditUserPage = () => {
     const { userId } = useParams();
@@ -43,11 +44,6 @@ const EditUserPage = () => {
         }
         return qualitiesArray;
     };
-
-    const handleBack = () => {
-        history.push(`/users/${data._id}`);
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
@@ -131,9 +127,7 @@ const EditUserPage = () => {
     const isValid = Object.keys(errors).length === 0;
     return (
         <div className="container mt-5">
-            <button onClick={handleBack} className="btn btn-primary">
-                Назад
-            </button>
+            <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
                     {!isLoading && Object.keys(professions).length > 0 ? (

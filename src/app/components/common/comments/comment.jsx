@@ -1,32 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { displayDate } from "../../../utils/displayDate";
 import API from "../../../api";
-import { parseDate } from "../../../utils/parseDate";
-
 const Comment = ({
-    userId,
     content,
-    _id: id,
     created_at: created,
+    _id: id,
+    userId,
     onRemove
 }) => {
     const [user, setUser] = useState();
     const [isLoading, setIsLoading] = useState(false);
-
     useEffect(() => {
         setIsLoading(true);
         API.users.getById(userId).then((data) => {
             setUser(data);
             setIsLoading(false);
         });
-        // console.log(id);
     }, []);
 
     return (
         <div className="bg-light card-body  mb-3">
             <div className="row">
                 {isLoading ? (
-                    <div>Loading...</div>
+                    "Loading ..."
                 ) : (
                     <div className="col">
                         <div className="d-flex flex-start ">
@@ -47,12 +44,12 @@ const Comment = ({
                                         <p className="mb-1 ">
                                             {user && user.name}{" "}
                                             <span className="small">
-                                                {parseDate(created)}
+                                                - {displayDate(created)}
                                             </span>
                                         </p>
                                         <button
-                                            onClick={() => onRemove(id)}
                                             className="btn btn-sm text-primary d-flex align-items-center"
+                                            onClick={() => onRemove(id)}
                                         >
                                             <i className="bi bi-x-lg"></i>
                                         </button>
@@ -68,12 +65,12 @@ const Comment = ({
     );
 };
 Comment.propTypes = {
-    comment: PropTypes.object,
-    userId: PropTypes.string,
     content: PropTypes.string,
-    _id: PropTypes.string,
+    edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     created_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    onRemove: PropTypes.func
+    userId: PropTypes.string,
+    onRemove: PropTypes.func,
+    _id: PropTypes.string
 };
 
 export default Comment;
