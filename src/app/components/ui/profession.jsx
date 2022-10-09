@@ -12,5 +12,4 @@ const Profession = ({ id }) => {
 Profession.propTypes = {
     id: PropTypes.string
 };
-
 export default Profession;
