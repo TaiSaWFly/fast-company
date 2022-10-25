@@ -69,7 +69,7 @@ const usersSlice = createSlice({
         },
         userUpdateRequestFalied: (state, action) => {
             state.error = action.payload;
-            state.dataLoaded = false;
+            state.dataLoaded = true;
         }
     }
 });
