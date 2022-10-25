@@ -5,9 +5,9 @@ import {
     getIsLoadingIn,
     getUsersLoadingStatus,
     loadUsersList
-} from "../../store/users";
-import { loadQualitiesList } from "../../store/qualities";
-import { loadProfessionsList } from "../../store/professions";
+} from "../../../store/users";
+import { loadQualitiesList } from "../../../store/qualities";
+import { loadProfessionsList } from "../../../store/professions";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
